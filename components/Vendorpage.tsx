@@ -57,7 +57,7 @@ export default function VendorPage({ initialVendors, session }: VendorPageProps)
     }
   };
 
-  const handleSave = async (vendor: Omit<Vendor, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const handleSave = async (vendor: Omit<Vendor, 'id' | 'createdAt' | 'updatedAt' | 'userId'>) => {
     setIsLoading(true);
     const method = editingVendor ? 'PUT' : 'POST';
     const url = editingVendor ? `/api/vonders/${editingVendor.id}` : '/api/vonders';
@@ -162,7 +162,7 @@ export default function VendorPage({ initialVendors, session }: VendorPageProps)
               </DialogHeader>
               <VendorForm
                 vendor={editingVendor}
-                onSave={handleSave}
+                onSave={handleSave} 
                 onCancel={closeDialog}
                 isLoading={isLoading}
               />

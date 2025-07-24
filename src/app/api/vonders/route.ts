@@ -8,9 +8,17 @@ export async function GET() {
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  
+  const userId = session.user?.id;
+  if (!userId) {
+    return NextResponse.json({ error: 'User ID not found' }, { status: 400 });
+  }
+
   const vendors = await prisma.vendor.findMany({
+    where: { userId: userId },
     orderBy: { createdAt: 'desc' },
   });
+  
   return NextResponse.json(vendors);
 }
 
@@ -19,6 +27,12 @@ export async function POST(request: Request) {
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  
+  const userId = session.user?.id;
+  if (!userId) {
+    return NextResponse.json({ error: 'User ID not found' }, { status: 400 });
+  }
+  
   const data = await request.json();
   try {
     const newVendor = await prisma.vendor.create({
@@ -31,6 +45,7 @@ export async function POST(request: Request) {
         city: data.city,
         country: data.country,
         zipCode: data.zipCode,
+        userId: userId,
       },
     });
     return NextResponse.json(newVendor, { status: 201 });

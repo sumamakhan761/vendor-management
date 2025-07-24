@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 
 interface VendorFormProps {
   vendor: Vendor | null;
-  onSave: (vendor: Omit<Vendor, 'id' | 'createdAt' | 'updatedAt'>) => void;
+  onSave: (vendor: Omit<Vendor, 'id' | 'createdAt' | 'updatedAt' | 'userId'>) => void;
   onCancel: () => void;
   isLoading: boolean;
 }

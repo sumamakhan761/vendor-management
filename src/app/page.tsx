@@ -5,8 +5,9 @@ import { authOptions } from "./api/auth/auth";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
-  const vendors = session
+  const vendors = session && session.user?.id
     ? await prisma.vendor.findMany({
+        where: { userId: session.user.id },
         orderBy: { createdAt: "desc" },
       })
     : [];
