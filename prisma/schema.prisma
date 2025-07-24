@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Vendor {
+  id            String @id @default(cuid())
+  name          String
+  bankAccountNo String
+  bankName      String
+  addressLine1  String? 
+  addressLine2  String
+  city          String? 
+  country       String? 
+  zipCode       String? 
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
